@@ -10,3 +10,5 @@ I don't really know how to make a noteskin but this one turned out great :)
 Huge thanks for hurtpiggypig for the nice design and hanubeki for the easy to understand codes :) 
 
 The skin falls back to hanubeki's skin for unsupported notes.
+
+![My image](http://i.imgur.com/JMpAmXC.png)
