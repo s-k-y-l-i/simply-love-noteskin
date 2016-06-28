@@ -77,6 +77,19 @@ local FallbackZero = {
 	end;
 };
 
+
+local TapRedir2 = {
+	["UpLeft"]    = "_downleft",
+	["UpRight"]   = "_downleft",
+	["DownLeft"]  = "_downleft",
+	["DownRight"] = "_downleft",
+	["Up"]        = "_down",
+	["Down"]      = "_down",
+	["Left"]      = "_down",
+	["Right"]     = "_down",
+	["Center"]    = "_center",
+	}
+setmetatable(TapRedir2, Fallback);
 -- [ja] Tap Note/Hold Head用のリダイレクトテーブル
 local TapRedir = {
 	["Up"]        = "_up",
@@ -140,6 +153,18 @@ local TapRotateY = {
 };
 setmetatable(TapRotateY, FallbackZero);
 
+local TapRotateZ1 = {
+	["Up"]        = 180,
+	["Down"]      = 0,
+	["Left"]      = 90,
+	["Right"]     = 270,
+	["UpLeft"]    = 180,
+	["UpRight"]   = 270,
+	["DownLeft"]  = 0,
+	["DownRight"] = 90,
+	["Center"] = 0,
+	}
+setmetatable(TapRotateZ1, FallbackZero);
 -- [ja] Tap Note/Hold Head用の回転テーブル
 local TapRotateZ = {
 	["Up"]        = 0,
@@ -344,7 +369,7 @@ local function func()
 
 		t[#t+1] = Def.Sprite {
 			Texture=NOTESKIN:GetPath(TapRedir[sButtonToLoad], "tap note");
-			Frames = Sprite.LinearFrames( 18, 1 );
+			Frames = Sprite.LinearFrames( 18, 2 );
 			
 			InitCommand=cmd(rotationy,rotY;rotationz,rotZ);
 		};
@@ -380,20 +405,47 @@ local function func()
 			Delay0000=1;
 			InitCommand=cmd(zoom,ZoomValue);
 		};
-	elseif string.find(sElementToLoad, "Hold .*cap") or
-	       string.find(sElementToLoad, "Roll .*cap") then
+	-- elseif string.find(sElementToLoad, "Hold .*cap") or
+	       -- string.find(sElementToLoad, "Roll .*cap") then
+		-- t = Def.Sprite {
+			-- Texture=NOTESKIN:GetPath(HoldCapRedir[sButtonToLoad], string.lower(sElementToLoad));
+			-- Frame0000=0;
+			-- Delay0000=1;
+		-- };
+	-- elseif string.find(sElementToLoad, "Hold Body") or
+	       -- string.find(sElementToLoad, "Roll Body") then
+		-- t = Def.Sprite {
+			-- Texture=NOTESKIN:GetPath(HoldBodyRedir[sButtonToLoad], string.lower(sElementToLoad));
+			-- Frame0000=0;
+			-- Delay0000=1;
+		-- };
+	elseif string.find(sElementToLoad, "Hold .*cap")
+	        then
 		t = Def.Sprite {
 			Texture=NOTESKIN:GetPath(HoldCapRedir[sButtonToLoad], string.lower(sElementToLoad));
 			Frame0000=0;
 			Delay0000=1;
 		};
-	elseif string.find(sElementToLoad, "Hold Body") or
-	       string.find(sElementToLoad, "Roll Body") then
+	elseif string.find(sElementToLoad, "Hold Body") then
 		t = Def.Sprite {
 			Texture=NOTESKIN:GetPath(HoldBodyRedir[sButtonToLoad], string.lower(sElementToLoad));
 			Frame0000=0;
 			Delay0000=1;
 		};
+	elseif string.find(sElementToLoad, "Roll .*cap") then
+		t = Def.Sprite {
+			Texture=NOTESKIN:GetPath("_fallback", string.lower(sElementToLoad));
+			Frame0000=0;
+			Delay0000=1;
+		};
+	elseif string.find(sElementToLoad, "Roll Body") then
+		t = Def.Sprite {
+			Texture=NOTESKIN:GetPath("_fallback", string.lower(sElementToLoad));
+			Frame0000=0;
+			Delay0000=1;
+		};
+		
+
 	elseif string.find(sElementToLoad, "Minefield .*cap") then
 		t = Def.Sprite {
 			Texture=NOTESKIN:GetPath("_fallback", string.lower(sElementToLoad));
@@ -435,14 +487,20 @@ local function func()
 	elseif sElementToLoad == "Explosion" then
 		local rotY = TapRotateY[sButtonToLoad];
 		local rotZ = TapRotateZ[sButtonToLoad];
+		local rotZ1 = TapRotateZ1[sButtonToLoad];
 		t[#t+1] = Def.Sprite {
-			Texture=NOTESKIN:GetPath("", "_hflash");
+			Texture=NOTESKIN:GetPath("_hflash", TapRedir2[sButtonToLoad]);
 			Frames = Sprite.LinearFrames( 64, 4 );
 			HoldingOnCommand=NOTESKIN:GetMetricA("HoldGhostArrow", "HoldingOnCommand");
 			HoldingOffCommand=NOTESKIN:GetMetricA("HoldGhostArrow", "HoldingOffCommand");
+			InitCommand=cmd(rotationz,rotZ1;playcommand,"HoldingOff";finishtweening);
+		};
+		t[#t+1] = Def.Sprite {
+			Texture=NOTESKIN:GetPath("_hflashroll", TapRedir2[sButtonToLoad]);
+			Frames = Sprite.LinearFrames( 64, 4 );
 			RollOnCommand=NOTESKIN:GetMetricA("HoldGhostArrow", "RollOnCommand");
 			RollOffCommand=NOTESKIN:GetMetricA("HoldGhostArrow", "RollOffCommand");
-			InitCommand=cmd(playcommand,"HoldingOff";finishtweening);
+			InitCommand=cmd(rotationz,rotZ1;playcommand,"RollOff";finishtweening);
 		};
 		t[#t+1] = Def.Sprite {
 			Texture=NOTESKIN:GetPath(TapRedir[sButtonToLoad], "glow");
@@ -460,9 +518,9 @@ local function func()
 			-- DimCommand=cmd(visible,true);
 		};
 		t[#t+1] = Def.Sprite {
-			Texture=NOTESKIN:GetPath("", "_bright");
+			Texture=NOTESKIN:GetPath("_hflash", TapRedir2[sButtonToLoad]);
 			Frames = Sprite.LinearFrames( 64, 4 );
-			InitCommand=cmd(rotationy,rotY;rotationz,rotZ;zoom,ZoomValue;diffusealpha,0);
+			InitCommand=cmd(rotationy,rotY;rotationz,rotZ1;zoom,ZoomValue;diffusealpha,0);
 			W5Command=NOTESKIN:GetMetricA("GhostArrowBright", "W5Command");
 			W4Command=NOTESKIN:GetMetricA("GhostArrowBright", "W4Command");
 			W3Command=NOTESKIN:GetMetricA("GhostArrowBright", "W3Command");
