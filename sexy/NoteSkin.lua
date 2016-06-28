@@ -376,7 +376,7 @@ local function func()
 	elseif sElementToLoad == "Tap Mine" then
 		t[#t+1] = Def.Sprite {
 			Texture=NOTESKIN:GetPath("", "_mine");
-			Frames = Sprite.LinearFrames( 18, 1 );
+			Frames = Sprite.LinearFrames( 18, 3 );
 			InitCommand=cmd(zoom,ZoomValue);
 		};
 		t[#t+1] = Def.Sprite {
