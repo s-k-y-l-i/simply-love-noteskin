@@ -2,7 +2,7 @@ local ret = ... or {};
 
 local game = GAMESTATE:GetCurrentGame():GetName();
 
--- [ja] Šeƒ{ƒ^ƒ“‚ÌƒŠƒ_ƒCƒŒƒNƒgƒe[ƒuƒ‹
+-- [ja] å„ãƒœã‚¿ãƒ³ã®ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆãƒ†ãƒ¼ãƒ–ãƒ«
 ret.RedirTable =
 {
 	-- Dance, Pump, pAra, Techno
@@ -90,7 +90,7 @@ local TapRedir2 = {
 	["Center"]    = "_center",
 	}
 setmetatable(TapRedir2, Fallback);
--- [ja] Tap Note/Hold Head—p‚ÌƒŠƒ_ƒCƒŒƒNƒgƒe[ƒuƒ‹
+-- [ja] Tap Note/Hold Headç”¨ã®ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆãƒ†ãƒ¼ãƒ–ãƒ«
 local TapRedir = {
 	["Up"]        = "_up",
 	["Down"]      = "_down",
@@ -136,7 +136,7 @@ local TapRedir = {
 };
 setmetatable(TapRedir, Fallback);
 
--- [ja] Tap Note/Hold Head—p‚Ì”½“]ƒe[ƒuƒ‹
+-- [ja] Tap Note/Hold Headç”¨ã®åè»¢ãƒ†ãƒ¼ãƒ–ãƒ«
 local TapRotateY = {
 	["DownLeftFoot"]  = 180,
 	["AnyLeftFoot"]   = 180,
@@ -165,7 +165,7 @@ local TapRotateZ1 = {
 	["Center"] = 0,
 	}
 setmetatable(TapRotateZ1, FallbackZero);
--- [ja] Tap Note/Hold Head—p‚Ì‰ñ“]ƒe[ƒuƒ‹
+-- [ja] Tap Note/Hold Headç”¨ã®å›žè»¢ãƒ†ãƒ¼ãƒ–ãƒ«
 local TapRotateZ = {
 	["Up"]        = 0,
 	["Down"]      = 0,
@@ -193,7 +193,7 @@ setmetatable(TapRotateZ, FallbackZero);
 
 
 
--- [ja] Hold Body—p‚ÌƒŠƒ_ƒCƒŒƒNƒgƒe[ƒuƒ‹
+-- [ja] Hold Bodyç”¨ã®ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆãƒ†ãƒ¼ãƒ–ãƒ«
 local HoldBodyRedir = {
 	["Up"]        = "_up",
 	["Down"]      = "_down",
@@ -241,7 +241,7 @@ setmetatable(HoldBodyRedir, Fallback);
 
 
 
--- [ja] Hold TopCap/BottomCap—p‚ÌƒŠƒ_ƒCƒŒƒNƒgƒe[ƒuƒ‹
+-- [ja] Hold TopCap/BottomCapç”¨ã®ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆãƒ†ãƒ¼ãƒ–ãƒ«
 local HoldCapRedir = {
 	["DownLeftFoot"]  = "_leftfoot",
 	["AnyLeftFoot"]   = "_leftfoot",
@@ -263,7 +263,7 @@ local HoldCapRedirMeta = {
 };
 setmetatable(HoldCapRedir, HoldCapRedirMeta);
 
--- [ja] ŠeGame—p‚Ìmine‚ÌŠg‘åƒe[ƒuƒ‹
+-- [ja] å„Gameç”¨ã®mineã®æ‹¡å¤§ãƒ†ãƒ¼ãƒ–ãƒ«
 local ZoomTable = {
 	["maniax"] = 1/2,
 	["beat"] = 1/2,
@@ -376,8 +376,7 @@ local function func()
 	elseif sElementToLoad == "Tap Mine" then
 		t[#t+1] = Def.Sprite {
 			Texture=NOTESKIN:GetPath("", "_mine");
-			Frame0000=0;
-			Delay0000=1;
+			Frames = Sprite.LinearFrames( 18, 1 );
 			InitCommand=cmd(zoom,ZoomValue);
 		};
 		t[#t+1] = Def.Sprite {
