@@ -11,4 +11,8 @@ Huge thanks for hurtpiggypig for the nice design and hanubeki for the easy to un
 
 The skin falls back to hanubeki's skin for unsupported notes.
 
+The new sexy noteskin:
+[![simply love noteskin sexy](http://i.imgur.com/ywrPNQK.png)](https://youtu.be/4nzlJfv9dzU "simply love noteskin sexy")
+
+Older version:
 ![My image](http://i.imgur.com/JMpAmXC.png)
